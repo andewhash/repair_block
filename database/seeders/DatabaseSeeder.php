@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // CitiesSeeder::class, // Если у вас есть сидер для городов
-            // AdminManagerSeeder::class,
+       //      CitiesSeeder::class, // Если у вас есть сидер для городов
+         //    AdminManagerSeeder::class,
             // Другие сидеры...
         ]);
 
@@ -90,66 +90,66 @@ class DatabaseSeeder extends Seeder
             ]);
         }
         
-        // $faker = Faker::create('ru_RU');
+         $faker = Faker::create('ru_RU');
         
         // // Сначала создаем необходимых пользователей
-        // $buyers = User::factory()->count(10)->create(['role' => 'buyer', 'company' => "test"]);
-        // $sellers = User::factory()->count(10)->create(['role' => 'seller', 'company' => "test"]);
+         $buyers = User::factory()->count(10)->create(['role' => 'buyer', 'company' => "test"]);
+         $sellers = User::factory()->count(10)->create(['role' => 'seller', 'company' => "test"]);
 
-        // $autoParts = [
-        //     'Тормозные колодки',
-        //     'Амортизаторы',
-        //     'Свечи зажигания',
-        //     'Воздушный фильтр',
-        //     'Масляный фильтр',
-        //     'Ремень ГРМ',
-        //     'Генератор',
-        //     'Стартер',
-        //     'Аккумулятор',
-        //     'Фары',
-        //     'Стекло лобовое',
-        //     'Диски колесные'
-        // ];
+         $autoParts = [
+             'Тормозные колодки',
+             'Амортизаторы',
+             'Свечи зажигания',
+             'Воздушный фильтр',
+             'Масляный фильтр',
+             'Ремень ГРМ',
+             'Генератор',
+             'Стартер',
+             'Аккумулятор',
+             'Фары',
+             'Стекло лобовое',
+             'Диски колесные'
+         ];
 
-        // for ($i = 0; $i < 12; $i++) {
-        //     $request = CustomerRequest::create([
-        //         'subject' => 'Нужны ' . $autoParts[$i],
-        //         'city_id' => $faker->numberBetween(1, 10),
-        //         'comment' => $faker->realText(200),
-        //         'file_path' => $i % 3 === 0 ? 'requests/file' . ($i+1) . '.pdf' : null,
-        //         'user_id' => $buyers->random()->id, // Берем случайного покупателя
-        //     ]);
+         for ($i = 0; $i < 12; $i++) {
+             $request = CustomerRequest::create([
+                 'subject' => 'Нужны ' . $autoParts[$i],
+                 'city_id' => $faker->numberBetween(1, 10),
+                 'comment' => $faker->realText(200),
+                 'file_path' => $i % 3 === 0 ? 'requests/file' . ($i+1) . '.pdf' : null,
+                 'user_id' => $buyers->random()->id, // Берем случайного покупателя
+             ]);
 
-        //     SellerResponse::create([
-        //         'customer_request_id' => $request->id,
-        //         'user_id' => $sellers->random()->id, // Берем случайного продавца
-        //         'response_text' => $faker->realText(150),
-        //         'file_path' => $i % 4 === 0 ? 'responses/offer' . ($i+1) . '.pdf' : null,
-        //         'responded_items' => json_encode([
-        //             'item' => $autoParts[$i],
-        //             'brand' => $faker->randomElement(['Bosch', 'Mann', 'Sachs', 'Brembo', 'KYB']),
-        //             'price' => $faker->numberBetween(1000, 10000),
-        //             'quantity' => $faker->numberBetween(1, 4),
-        //         ]),
-        //         'status' => 'completed',
-        //     ]);
-        // }
+             SellerResponse::create([
+                 'customer_request_id' => $request->id,
+                 'user_id' => $sellers->random()->id, // Берем случайного продавца
+                 'response_text' => $faker->realText(150),
+                 'file_path' => $i % 4 === 0 ? 'responses/offer' . ($i+1) . '.pdf' : null,
+                 'responded_items' => json_encode([
+                     'item' => $autoParts[$i],
+                     'brand' => $faker->randomElement(['Bosch', 'Mann', 'Sachs', 'Brembo', 'KYB']),
+                    'price' => $faker->numberBetween(1000, 10000),
+                     'quantity' => $faker->numberBetween(1, 4),
+                 ]),
+                 'status' => 'completed',
+             ]);
+         }
 
-        // ContactSetting::create([
-        //     'company_name' => 'ТехноПартнер',
-        //     'address' => 'г. Москва, ул. Промышленная, д. 42, офис 305',
-        //     'map_link' => 'https://yandex.ru/maps/org/12345',
-        //     'phone_primary' => '+7 (495) 123-45-67',
-        //     'phone_secondary' => '+7 (800) 123-45-67',
-        //     'email_primary' => 'info@tehnopartner.ru',
-        //     'email_secondary' => 'sales@tehnopartner.ru',
-        //     'work_hours' => 'Пн-Пт: 9:00-18:00, Сб-Вс: выходной',
-        //     'social_links' => json_encode([
-        //         'vk' => 'https://vk.com/tehnopartner',
-        //         'telegram' => 'https://t.me/tehnopartner',
-        //         'whatsapp' => 'https://wa.me/74951234567'
-        //     ]),
-        //     'additional_info' => 'Реквизиты: ИНН 1234567890, ОГРН 1234567890123'
-        // ]);
+         ContactSetting::create([
+             'company_name' => 'ТехноПартнер',
+             'address' => 'г. Москва, ул. Промышленная, д. 42, офис 305',
+             'map_link' => 'https://yandex.ru/maps/org/12345',
+             'phone_primary' => '+7 (495) 123-45-67',
+             'phone_secondary' => '+7 (800) 123-45-67',
+             'email_primary' => 'info@tehnopartner.ru',
+             'email_secondary' => 'sales@tehnopartner.ru',
+             'work_hours' => 'Пн-Пт: 9:00-18:00, Сб-Вс: выходной',
+             'social_links' => json_encode([
+                 'vk' => 'https://vk.com/tehnopartner',
+                 'telegram' => 'https://t.me/tehnopartner',
+                 'whatsapp' => 'https://wa.me/74951234567'
+             ]),
+             'additional_info' => 'Реквизиты: ИНН 1234567890, ОГРН 1234567890123'
+         ]);
     }
 }

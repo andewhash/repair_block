@@ -103,7 +103,7 @@
         </div>
         
         <div class="mt-3">
-            {{ $products->links() }}
+            {{ $products->links('vendor.pagination.custom') }}
         </div>
     </div>
 </div>

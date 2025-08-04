@@ -177,7 +177,7 @@
                     @if($requests->count() > 0)
                         <div class="list-group">
                             @foreach($requests as $order)
-                                <a href="{{ route('orders.show', $order->id) }}" class="list-group-item list-group-item-action">
+                                <a class="list-group-item list-group-item-action">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">Заказ #{{ $order->id }}</h5>
                                         <small>{{ $order->created_at->diffForHumans() }}</small>
@@ -188,7 +188,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p>У вас пока нет заявок</p>
+                        <p>У вас пока нет заявок. <a href="/requests">Хотите создать?</a></p>
                     @endif
                 </div>
             </div>

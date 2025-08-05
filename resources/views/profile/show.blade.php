@@ -177,13 +177,12 @@
                     @if($requests->count() > 0)
                         <div class="list-group">
                             @foreach($requests as $order)
-                                <a class="list-group-item list-group-item-action">
+                                <a href="{{'/requests/' . $order->id . '/edit'}}" class="list-group-item list-group-item-action">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Заказ #{{ $order->id }}</h5>
-                                        <small>{{ $order->created_at->diffForHumans() }}</small>
+                                        <h5 class="mb-1">{{ $order->subject }}</h5>
                                     </div>
-                                    <p class="mb-1">Статус: {{ $order->status }}</p>
-                                    <small>Сумма: {{ number_format($order->total, 2) }} руб.</small>
+                                    <p class="mb-1">Город: {{ $order->city->name }}</p>
+                                    <small>{{ $order->created_at->diffForHumans() }}</small>
                                 </a>
                             @endforeach
                         </div>

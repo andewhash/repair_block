@@ -60,7 +60,7 @@
                                 <div class="col-6">
                                     <label class="form-label">Бренд *</label>
                                     <select class="form-control brand-select @error('items.0.brand_id') is-invalid @enderror" 
-                                            name="items[0][brand_id]" required>
+                                            name="items[0][brand_id]" >
                                         <option value="">Выберите бренд</option>
                                         @foreach($brands as $brand)
                                             <option value="{{ $brand->id }}" 
@@ -135,7 +135,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Производитель *</label>
                                     <select class="form-control manufacturer-select @error('items.0.manufacturer_id') is-invalid @enderror" 
-                                            name="items[0][manufacturer_id]" required>
+                                            name="items[0][manufacturer_id]">
                                         <option value="">Выберите производителя</option>
                                         @foreach($manufacturers as $manufacturer)
                                             <option value="{{ $manufacturer->id }}" 
@@ -154,7 +154,10 @@
                                 </div>
                             </div>
                         </div>
-                    
+                        <div class="mb-3">
+                            <label class="form-label">Комментарий</label>
+                            <textarea class="form-control" name="items[0][comment]"></textarea>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Файл товара</label>
                             <input type="file" class="form-control" name="items[0][file]">

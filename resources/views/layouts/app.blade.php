@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="/css/magnific-popup.css">
 	<link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body style="height: auto !important; overflow-x: hidden;">
 	<style>
 		.nice-select {
 			justify-content: start;
@@ -175,7 +175,7 @@
     text-decoration: none;
 }
 	 </style>
-<footer class="footer-area section_gap">
+<footer class="footer-area section_gap" style="margin-top: 100px;">
     @php
         $contactSettings = App\Models\ContactSetting::first();
         $socialLinks = $contactSettings ? json_decode($contactSettings->social_links, true) : [];

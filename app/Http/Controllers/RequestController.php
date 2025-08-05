@@ -67,8 +67,10 @@ class RequestController extends Controller
     }
 
     // Обновление заявки
-    public function update(Request $request, CustomerRequest $customerRequest)
+    public function update(Request $request, $customerRequestId)
     {
+        $customerRequest = CustomerRequest::where('user_id', auth()->id())->findOrFail($customerRequestId);
+
         $validated = $this->validateRequest($request);
 
         // Обработка файла если есть
@@ -136,7 +138,7 @@ class RequestController extends Controller
         }
 
         if ($file) {
-            return $file->store('request_files');
+            return $file->store('/public/request_files');
         }
 
         return $oldFilePath;
@@ -163,11 +165,12 @@ class RequestController extends Controller
             // Обработка файла товара
             $itemFilePath = null;
             if (isset($itemData['file']) && $itemData['file']) {
-                $itemFilePath = $itemData['file']->store('request_item_files');
+                $itemFilePath = $itemData['file']->store('/public/request_item_files');
             }
 
             // Создаем товар
             $customerRequest->items()->create([
+                'customer_request_id' => $customerRequest->id, 
                 'item_number' => $itemData['item_number'],
                 'brand_id' => $brandId,
                 'article' => $itemData['article'],

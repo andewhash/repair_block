@@ -71,94 +71,85 @@
                             <input type="hidden" name="items[{{ $index }}][item_number]" value="{{ $index + 1 }}">
                             
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Бренд *</label>
-                                    <select class="form-control brand-select" name="items[{{ $index }}][brand_id]">
-                                        <option value="">Выберите бренд</option>
-                                        @foreach($brands as $brand)
-                                            <option value="{{ $brand->id }}" {{$item['brand_id'] ?? null == $brand->id ? 'selected' : '' }}>
-                                                {{ $brand->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <small class="text-muted">Или укажите новый:</small>
-                                    <input type="text" class="form-control mt-1 new-brand" 
-                                           name="items[{{ $index }}][new_brand]" 
-                                           value="{{ old("items.$index.new_brand") }}"
-                                           placeholder="Новый бренд"
-                                           {{ !empty(old("items.$index.brand_id", $item['brand_id'] ?? null)) ? '' : 'required' }}>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label">Бренд *</label>
+                                        <select class="form-control brand-select" name="items[{{ $index }}][brand_id]">
+                                            <option value="">Выберите бренд</option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand->id }}" {{$item['brand_id'] ?? null == $brand->id ? 'selected' : '' }}>
+                                                    {{ $brand->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Или укажите новый:</small>
+                                        <input type="text" class="form-control mt-1 new-brand" 
+                                               name="items[{{ $index }}][new_brand]" 
+                                               value="{{ old("items.$index.new_brand") }}"
+                                               placeholder="Новый бренд"
+                                               {{ !empty(old("items.$index.brand_id", $item['brand_id'] ?? null)) ? '' : 'required' }}>
+                                    </div>
                                 </div>
                                 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Артикул *</label>
-                                    <input type="text" class="form-control" 
-                                           name="items[{{ $index }}][article]" 
-                                           value="{{ old("items.$index.article", $item['article']) }}" required>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Наименование *</label>
-                                    <input type="text" class="form-control" 
-                                           name="items[{{ $index }}][name]" 
-                                           value="{{ old("items.$index.name", $item['name']) }}" required>
-                                </div>
-                                
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Количество *</label>
-                                    <input type="number" class="form-control" 
-                                           name="items[{{ $index }}][quantity]" 
-                                           value="{{ old("items.$index.quantity", $item['quantity']) }}" min="1" required>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Тип качества *</label>
-                                    <select class="form-control" name="items[{{ $index }}][quality_type]" required>
-                                        <option value="Оригинал" {{ (old("items.$index.quality_type", $item['quality_type']) == 'Оригинал' ? 'selected' : '') }}>Оригинал</option>
-                                        <option value="Аналог" {{ (old("items.$index.quality_type", $item['quality_type']) == 'Аналог' ? 'selected' : '') }}>Аналог</option>
-                                        <option value="OEM" {{ (old("items.$index.quality_type", $item['quality_type']) == 'OEM' ? 'selected' : '') }}>OEM</option>
-                                        <option value="REMAN" {{ (old("items.$index.quality_type", $item['quality_type']) == 'REMAN' ? 'selected' : '') }}>REMAN</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Артикул *</label>
+                                        <input type="text" class="form-control" 
+                                               name="items[{{ $index }}][article]" 
+                                               value="{{ old("items.$index.article", $item['article']) }}" required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Наименование *</label>
+                                        <input type="text" class="form-control" 
+                                               name="items[{{ $index }}][name]" 
+                                               value="{{ old("items.$index.name", $item['name']) }}" required>
+                                    </div>
                                 </div>
                                 
-                                {{-- <div class="col-md-6 mb-3">
-                                    <label class="form-label">Цена</label>
-                                    <input type="number" step="0.01" class="form-control" 
-                                           name="items[{{ $index }}][price]" 
-                                           value="{{ old("items.$index.price", $item['price']) }}">
-                                </div> --}}
-                            </div>
-                            
-                            <div class="row">
-                                {{-- <div class="col-md-6 mb-3">
-                                    <label class="form-label">Срок поставки (дни)</label>
-                                    <input type="number" class="form-control" 
-                                           name="items[{{ $index }}][delivery_days]" 
-                                           value="{{ old("items.$index.delivery_days", $item['delivery_days']) }}" min="0">
-                                </div> --}}
-                                
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Производитель *</label>
-                                    <select class="form-control manufacturer-select" name="items[{{ $index }}][manufacturer_id]">
-                                        <option value="">Выберите производителя</option>
-                                        @foreach($manufacturers as $manufacturer)
-                                            <option value="{{ $manufacturer->id }}" {{$item['manufacturer_id'] ?? null == $manufacturer->id ? 'selected' : '' }}>
-                                                {{ $manufacturer->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <small class="text-muted">Или укажите нового:</small>
-                                    <input type="text" class="form-control mt-1 new-manufacturer" 
-                                           name="items[{{ $index }}][new_manufacturer]" 
-                                           value="{{ old("items.$index.new_manufacturer") }}"
-                                           placeholder="Новый производитель"
-                                           {{ !empty(old("items.$index.manufacturer_id", $item['manufacturer_id'] ?? null)) ? '' : 'required' }}>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Количество *</label>
+                                        <input type="number" class="form-control" 
+                                               name="items[{{ $index }}][quantity]" 
+                                               value="{{ old("items.$index.quantity", $item['quantity']) }}" min="1" required>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Тип качества *</label>
+                                        <select class="form-control" name="items[{{ $index }}][quality_type]" required>
+                                            <option value="Оригинал" {{ (old("items.$index.quality_type", $item['quality_type']) == 'Оригинал' ? 'selected' : '') }}>Оригинал</option>
+                                            <option value="Аналог" {{ (old("items.$index.quality_type", $item['quality_type']) == 'Аналог' ? 'selected' : '') }}>Аналог</option>
+                                            <option value="OEM" {{ (old("items.$index.quality_type", $item['quality_type']) == 'OEM' ? 'selected' : '') }}>OEM</option>
+                                            <option value="REMAN" {{ (old("items.$index.quality_type", $item['quality_type']) == 'REMAN' ? 'selected' : '') }}>REMAN</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Производитель *</label>
+                                        <select class="form-control manufacturer-select" name="items[{{ $index }}][manufacturer_id]">
+                                            <option value="">Выберите производителя</option>
+                                            @foreach($manufacturers as $manufacturer)
+                                                <option value="{{ $manufacturer->id }}" {{$item['manufacturer_id'] ?? null == $manufacturer->id ? 'selected' : '' }}>
+                                                    {{ $manufacturer->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <small class="text-muted">Или укажите нового:</small>
+                                        <input type="text" class="form-control mt-1 new-manufacturer" 
+                                               name="items[{{ $index }}][new_manufacturer]" 
+                                               value="{{ old("items.$index.new_manufacturer") }}"
+                                               placeholder="Новый производитель"
+                                               {{ !empty(old("items.$index.manufacturer_id", $item['manufacturer_id'] ?? null)) ? '' : 'required' }}>
+                                    </div>
                                 </div>
                             </div>
-                            
                             <div class="mb-3">
                                 <label class="form-label">Комментарий</label>
                                 <textarea class="form-control" name="items[{{ $index }}][comment]">{{ old("items.$index.comment", $item['comment']) }}</textarea>
@@ -186,8 +177,11 @@
         </div>
         
         <div class="d-flex justify-content-between">
-            <a href="{{ route('requests.index') }}" class="btn btn-secondary">Назад</a>
-            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <div>
+                <a href="{{ route('requests.index') }}" class="btn btn-secondary">Назад</a>
+
+            </div>
+            <button type="submit" class="primary-btn">Сохранить изменения</button>
         </div>
     </form>
 </div>

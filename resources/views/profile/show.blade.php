@@ -158,13 +158,13 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="primary-btn">
+                    <a href="/stock/exchange" type="submit" class="primary-btn">
                         Посмотреть заявки
-                    </button>
+                    </a>
 
-                    <button type="submit" class="primary-btn">
+                    <a style="color: white;" href="/responses" type="submit" class="primary-btn">
                         Ваши отклики
-                    </button>
+                    </a>
                 </div>
             @endif
             @if($user->role === 'user' || $user->role == 'admin')

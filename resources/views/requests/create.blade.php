@@ -3,15 +3,6 @@
 @section('content')
 <div class="container py-4 contact_form" style="margin-top: 150px;">
     <h1>Создание новой заявки</h1>
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <form method="POST" action="{{ route('requests.store') }}" enctype="multipart/form-data">
         @csrf
         
@@ -25,12 +16,17 @@
                 
                 <div class="mb-3">
                     <label for="city_id" class="form-label">Город *</label>
-                    <select class="form-control" id="city_id" name="city_id" required>
+                    <select class="form-control @error('city_id') is-invalid @enderror" id="city_id" name="city_id" >
                         <option value="">Выберите город</option>
                         @foreach($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                {{ $city->name }}
+                            </option>
                         @endforeach
                     </select>
+                    @error('city_id')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <div class="mb-3">
@@ -59,18 +55,31 @@
                         <input type="hidden" name="items[0][item_number]" value="1">
                         
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Бренд *</label>
-                                <select class="form-control brand-select" name="items[0][brand_id]">
-                                    <option value="">Выберите бренд</option>
-                                    @foreach($brands as $brand)
-                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                    @endforeach
-                                </select>
-                                <small class="text-muted">Или укажите новый:</small>
-                                <input type="text" class="form-control mt-1 new-brand" name="items[0][new_brand]" placeholder="Новый бренд">
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="form-label">Бренд *</label>
+                                    <select class="form-control brand-select @error('items.0.brand_id') is-invalid @enderror" 
+                                            name="items[0][brand_id]" required>
+                                        <option value="">Выберите бренд</option>
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}" 
+                                                {{ old('items.0.brand_id') == $brand->id ? 'selected' : '' }}>
+                                                {{ $brand->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('items.0.brand_id')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-6">
+                                    <small class="text-muted">Или укажите новый:</small>
+                                    <input type="text" class="form-control mt-1 new-brand" name="items[0][new_brand]" placeholder="Новый бренд">
+                                </div>
                             </div>
-                            
+                                
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Артикул *</label>
@@ -93,7 +102,7 @@
                                 </div>
                             </div>
                             
-                            
+                            <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Количество *</label>
                                     <input type="number" class="form-control" 
@@ -106,7 +115,10 @@
                                 
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Тип качества *</label>
-                                    <select class="form-control" name="items[0][quality_type]" required>
+                                    <select class="form-control @error('items.0.quality_type') is-invalid @enderror" 
+                                            name="items[0][quality_type]" 
+                                            id="items_0_quality_type" 
+                                            >
                                         <option value="">Выберите тип</option>
                                         <option value="Оригинал" {{ old('items.0.quality_type') == 'Оригинал' ? 'selected' : '' }}>Оригинал</option>
                                         <option value="Аналог" {{ old('items.0.quality_type') == 'Аналог' ? 'selected' : '' }}>Аналог</option>
@@ -117,23 +129,32 @@
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Производитель *</label>
-                                <select class="form-control manufacturer-select" name="items[0][manufacturer_id]">
-                                    <option value="">Выберите производителя</option>
-                                    @foreach($manufacturers as $manufacturer)
-                                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
-                                    @endforeach
-                                </select>
-                                <small class="text-muted">Или укажите нового:</small>
-                                <input type="text" class="form-control mt-1 new-manufacturer" name="items[0][new_manufacturer]" placeholder="Новый производитель">
+                            </div>
+                                
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Производитель *</label>
+                                    <select class="form-control manufacturer-select @error('items.0.manufacturer_id') is-invalid @enderror" 
+                                            name="items[0][manufacturer_id]" required>
+                                        <option value="">Выберите производителя</option>
+                                        @foreach($manufacturers as $manufacturer)
+                                            <option value="{{ $manufacturer->id }}" 
+                                                {{ old('items.0.manufacturer_id') == $manufacturer->id ? 'selected' : '' }}>
+                                                {{ $manufacturer->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('items.0.manufacturer_id')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <small class="text-muted">Или укажите нового:</small>
+                                    <input type="text" class="form-control mt-1 new-manufacturer" name="items[0][new_manufacturer]" placeholder="Новый производитель">
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Остальные поля товара -->
-                        <!-- ... -->
-                        
+                    
                         <div class="mb-3">
                             <label class="form-label">Файл товара</label>
                             <input type="file" class="form-control" name="items[0][file]">

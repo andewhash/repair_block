@@ -18,13 +18,13 @@
 
 <!--================Blog Area =================-->
 <section class="blog_area single-post-area section_gap">
-    <div class="container">
+    <div class="container contact_form">
         <div class="row">
             <div class="col-lg-8 posts-list">
                 <div class="single-post row">
                     <div class="col-lg-12">
                         <div class="feature-img">
-                            <img class="img-fluid" src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+                            <img class="img-fluid" src="/storage/{{ $blog->image }}" style="height: 400px; object-fit: cover;width: 100%" alt="{{ $blog->title }}">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3">
@@ -34,7 +34,7 @@
                             </div>
                             <ul class="blog_meta list">
                                 <li><a href="#">{{ $blog->author->name }}<i class="lnr lnr-user"></i></a></li>
-                                <li><a href="#">{{ $blog->created_at->format('d M, Y') }}<i class="lnr lnr-calendar-full"></i></a></li>
+                                <li><a href="#">{{ $blog->created_at->format('d m, Y') }}<i class="lnr lnr-calendar-full"></i></a></li>
                                 <li><a href="#">{{ $blog->views }} просмотров<i class="lnr lnr-eye"></i></a></li>
                                 <li><a href="#">{{ $blog->comments->count() }} комментариев<i class="lnr lnr-bubble"></i></a></li>
                             </ul>
@@ -115,17 +115,42 @@
                     <form action="{{ route('blog.comment.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="blog_id" value="{{ $blog->id }}">
+                        
                         <div class="form-group form-inline">
                             <div class="form-group col-lg-6 col-md-6 name">
-                                <input type="text" class="form-control" name="name" placeholder="Ваше имя" required>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" 
+                                       placeholder="Ваше имя" value="{{ old('name') }}" required>
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-lg-6 col-md-6 email">
-                                <input type="email" class="form-control" name="email" placeholder="Ваш email" required>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" 
+                                       placeholder="Ваш email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            <textarea class="form-control mb-10" rows="5" name="comment" placeholder="Ваш комментарий" required></textarea>
+                            <textarea class="form-control mb-10 @error('comment') is-invalid @enderror" rows="5" name="comment" 
+                                      placeholder="Ваш комментарий" required>{{ old('comment') }}</textarea>
+                            @error('comment')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        
                         <button type="submit" class="primary-btn submit_btn">Отправить</button>
                     </form>
                 </div>

@@ -12,11 +12,11 @@ class BlogCommentController extends Controller
             'blog_id' => 'required|exists:blogs,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'comment' => 'required|string|min:10|max:2000',
+            'comment' => 'required|string|min:1|max:2000',
         ]);
 
         BlogComment::create($validated + [
-            'approved' => false
+            'approved' => true
         ]);
 
         return back()->with('success', 'Комментарий отправлен на модерацию!');

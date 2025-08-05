@@ -55,6 +55,7 @@
                     </div>
                     <div class="info_item">
                         <i class="lnr lnr-envelope"></i>
+    
                         <h6>
                             @if($contactSettings && $contactSettings->email_primary)
                                 <a href="mailto:{{ $contactSettings->email_primary }}">
@@ -74,17 +75,20 @@
                     </div>
                     
                     @if(!empty($socialLinks))
-                    <div class="info_item">
+                    <div class="info_item mt-4">
                         <h6>Мы в соцсетях</h6>
                         <div class="footer-social d-flex align-items-center mt-2">
                             @isset($socialLinks['vk'])
-                                <a href="{{ $socialLinks['vk'] }}" target="_blank" class="mr-3"><i class="fa fa-vk"></i></a>
+                            <div style="position: relative">
+                                <a href="{{ $socialLinks['vk'] }}" target="_blank" class="mr-3"><i class="fa fa-vk"></i></a></div>
                             @endisset
                             @isset($socialLinks['telegram'])
-                                <a href="{{ $socialLinks['telegram'] }}" target="_blank" class="mr-3"><i class="fa fa-telegram"></i></a>
+                            <div style="position: relative">
+                                <a href="{{ $socialLinks['telegram'] }}" target="_blank" class="mr-3"><i class="fa fa-telegram"></i></a></div>
                             @endisset
                             @isset($socialLinks['whatsapp'])
-                                <a href="{{ $socialLinks['whatsapp'] }}" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                            <div style="position: relative">
+                                <a href="{{ $socialLinks['whatsapp'] }}" target="_blank"><i class="fa fa-whatsapp"></i></a></div>
                             @endisset
                         </div>
                     </div>

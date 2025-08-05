@@ -47,30 +47,42 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                            <li class="nav-item active"><a class="nav-link" href="{{route('welcome')}}">Главная</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{route('blog.index')}}">Блог</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{route('contact')}}">Контакты</a></li>
+                            <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
+                                <a class="nav-link" href="{{route('welcome')}}">Главная</a>
+                            </li>
+                            <li class="nav-item @if(request()->routeIs('blog.*')) active @endif">
+                                <a class="nav-link" href="{{route('blog.index')}}">Блог</a>
+                            </li>
+                            <li class="nav-item @if(request()->routeIs('contact')) active @endif">
+                                <a class="nav-link" href="{{route('contact')}}">Контакты</a>
+                            </li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right" style="    align-items: center;justify-content: center;display: flex;">
+                        <ul class="nav navbar-nav navbar-right" style="align-items: center;justify-content: center;display: flex;">
                             @auth
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                    aria-expanded="false">
+                                <li class="nav-item submenu dropdown @if(request()->routeIs('profile.*') || request()->routeIs('requests.*') || request()->routeIs('responses.*') || request()->routeIs('stock.*')) active @endif">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <i class="ti-user"></i> {{ Auth::user()->name }}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li class="nav-item" style="margin-left: 0"><a class="nav-link" href="{{ route('profile.show') }}" style="margin-left: 0;">Профиль</a></li>
+                                        <li class="nav-item @if(request()->routeIs('profile.show')) active @endif" style="margin-left: 0">
+                                            <a class="nav-link" href="{{ route('profile.show') }}" style="margin-left: 0;">Профиль</a>
+                                        </li>
                                         @if(auth()->user()->role == 'user')
-										<li class="nav-item"><a class="nav-link" href="{{ route('requests.index') }}">Мои заявки</a></li>
+                                            <li class="nav-item @if(request()->routeIs('requests.index')) active @endif">
+                                                <a class="nav-link" href="{{ route('requests.index') }}">Мои заявки</a>
+                                            </li>
                                         @else
-										<li class="nav-item"><a class="nav-link" href="{{ route('responses.index') }}">Мои отклики</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{ route('stock.exchange') }}">Заявки</a></li>
-										@endif
-										<li class="nav-item">
+                                            <li class="nav-item @if(request()->routeIs('responses.index')) active @endif">
+                                                <a class="nav-link" href="{{ route('responses.index') }}">Мои отклики</a>
+                                            </li>
+                                            <li class="nav-item @if(request()->routeIs('stock.exchange')) active @endif">
+                                                <a class="nav-link" href="{{ route('stock.exchange') }}">Заявки</a>
+                                            </li>
+                                        @endif
+                                        <li class="nav-item">
                                             <form method="POST" action="{{ route('logout') }}">
                                                 @csrf
-                                                <a class="nav-link" href="{{ route('logout') }}" 
-                                                onclick="event.preventDefault(); this.closest('form').submit();">
+                                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
                                                     Выйти
                                                 </a>
                                             </form>
@@ -78,13 +90,13 @@
                                     </ul>
                                 </li>
                             @else
-                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Войти</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Регистрация</a></li>
+                                <li class="nav-item @if(request()->routeIs('login')) active @endif">
+                                    <a class="nav-link" href="{{ route('login') }}">Войти</a>
+                                </li>
+                                <li class="nav-item @if(request()->routeIs('register')) active @endif">
+                                    <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
+                                </li>
                             @endauth
-                            {{-- <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li> --}}
-                            <li class="nav-item">
-                                <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -174,31 +186,29 @@
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="single-footer-widget">
                     <h6>Контактная информация</h6>
-                    <div class="info_item mt-3 d-flex">
+                    <div class="info_item d-flex">
                         <i class="lnr lnr-home"></i>
                         <p>{{ $contactSettings->address ?? 'г. Москва, ул. Промышленная, д. 42, офис 305' }}</p>
                     </div>
-                    <div class="info_item mt-3 d-flex">
+                    <div class="info_item d-flex">
                         <i class="lnr lnr-phone-handset"></i>
                         <p>
                             @if($contactSettings && $contactSettings->phone_primary)
-                                <a href="tel:{{ preg_replace('/[^0-9]/', '', $contactSettings->phone_primary) }}">
+                                <a  style="color: #777777" href="tel:{{ preg_replace('/[^0-9]/', '', $contactSettings->phone_primary) }}">
                                     {{ $contactSettings->phone_primary }}
                                 </a>
                             @else
-                                <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+                                <a style="color: #777777" href="tel:+74951234567">+7 (495) 123-45-67</a>
                             @endif
                         </p>
                         
                     </div>
-					<div class="info_item mt-3 d-flex">
-						<p>{{ $contactSettings->work_hours ?? 'Пн-Пт: 9:00-18:00, Сб-Вс: выходной' }}</p>
-					</div>
-                    <div class="info_item mt-3 d-flex">
+					
+                    <div class="info_item d-flex">
                         <i class="lnr lnr-envelope"></i>
                         <p>
                             @if($contactSettings && $contactSettings->email_primary)
-                                <a href="mailto:{{ $contactSettings->email_primary }}">
+                                <a style="color: #777777" href="mailto:{{ $contactSettings->email_primary }}">
                                     {{ $contactSettings->email_primary }}
                                 </a>
                             @else
@@ -206,6 +216,9 @@
                             @endif
                         </p>
                     </div>
+                    <div class="info_item d-flex">
+						<p>{{ $contactSettings->work_hours ?? 'Пн-Пт: 9:00-18:00, Сб-Вс: выходной' }}</p>
+					</div>
                 </div>
             </div>
             

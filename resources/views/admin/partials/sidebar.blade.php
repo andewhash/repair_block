@@ -4,12 +4,12 @@
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="position-sticky pt-3 sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" 
                            href="{{ route('admin.dashboard') }}">
                             <i class="bi bi-speedometer2 me-2"></i>
                             Панель управления
-                        </a>
+                        </a> --}}
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" 

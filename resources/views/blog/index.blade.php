@@ -52,7 +52,7 @@
                     </article>
                     @endforeach
 
-                    {{ $blogs->links('vendor.pagination.custom') }}
+                    {{ $blogs->appends(request()->query())->links('vendor.pagination.custom') }}
                 </div>
             </div>
             <div class="col-lg-4">

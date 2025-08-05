@@ -3,22 +3,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::with(['category', 'author'])
-                   ->latest()
-                   ->paginate(5);
-        
-        $popularPosts = Blog::orderBy('views', 'desc')
-                          ->limit(3)
-                          ->get();
-        
-        $categories = BlogCategory::withCount('blogs')
-                            ->orderBy('blogs_count', 'desc')
-                            ->get();
+        $query = Blog::with(['category', 'author'])
+                ->latest();
+
+        // Поиск по заголовку или содержимому
+        if ($request->get('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        // Фильтр по категории
+        if ($request->get('category')) {
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('slug', $request->input('category'));
+            });
+        }
+
+        $blogs = $query->paginate(5);
+        $popularPosts = Blog::orderBy('views', 'desc')->limit(3)->get();
+        $categories = BlogCategory::withCount('blogs')->get();
 
         return view('blog.index', compact('blogs', 'popularPosts', 'categories'));
     }

@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
+        return redirect('admin/users');
         return view('admin.dashboard');
     }
 }

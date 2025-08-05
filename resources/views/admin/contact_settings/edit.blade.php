@@ -20,7 +20,7 @@
             
             <div class="row g-3">
                 <!-- Основная информация -->
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                     <label for="company_name" class="form-label">Название компании</label>
                     <input type="text" class="form-control" id="company_name" name="company_name" 
                            value="{{ old('company_name', $contactSettings->company_name) }}">
@@ -35,7 +35,7 @@
                             <p class="small text-muted mt-1">Текущий логотип</p>
                         </div>
                     @endif
-                </div>
+                </div> --}}
                 
                 <div class="col-12">
                     <label for="address" class="form-label">Адрес</label>

@@ -17,15 +17,15 @@ class ProductController extends Controller
         $query = Product::with(['brand', 'manufacturer', 'city', 'supplier']);
 
         // Фильтрация
-        if ($request->has('brand_id')) {
+        if ($request->get('brand_id')) {
             $query->where('brand_id', $request->brand_id);
         }
 
-        if ($request->has('city_id')) {
+        if ($request->get('city_id')) {
             $query->where('city_id', $request->city_id);
         }
 
-        if ($request->has('search')) {
+        if ($request->get('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('article', 'like', "%$search%")

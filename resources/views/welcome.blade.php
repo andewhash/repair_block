@@ -13,7 +13,7 @@
                                 <h1>Запчасти для спецтехники <br>от ведущих производителей!</h1>
                                 <p>Мы специализируемся на поставках оригинальных и качественных аналогов запчастей для спецтехники. Оставьте заявку и получите лучшее предложение на рынке.</p>
                                 <div class="add-bag d-flex align-items-center">
-                                    <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+                                    <a class="add-btn" href="/requests"><span class="lnr lnr-cross"></span></a>
                                     <span class="add-text text-uppercase">Оставить заявку</span>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                 <h1>Профессиональные консультации <br>по подбору запчастей</h1>
                                 <p>Наши специалисты помогут подобрать оптимальные решения для вашей техники. Оригиналы и качественные аналоги от проверенных производителей.</p>
                                 <div class="add-bag d-flex align-items-center">
-                                    <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+                                    <a class="add-btn" href="/contacts"><span class="lnr lnr-cross"></span></a>
                                     <span class="add-text text-uppercase">Контакты</span>
                                 </div>
                             </div>

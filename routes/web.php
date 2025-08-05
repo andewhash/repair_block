@@ -64,10 +64,22 @@ Route::post('/blog/comment', [BlogCommentController::class, 'store'])->name('blo
 
 // routes/web.php
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-     Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
-     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
          ->names('admin.users');
+         
+    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)
+        ->except(['show'])
+        ->names('admin.blogs');
+
+    Route::get('/import', [\App\Http\Controllers\Admin\UserController::class, 'showImportForm'])->name('admin.users.import');
+    Route::post('/import/process', [\App\Http\Controllers\Admin\UserController::class, 'processImport'])->name('admin.users.import.process');
+    Route::post('/{user}/approve-supplier', [\App\Http\Controllers\Admin\UserController::class, 'approveSupplier'])
+         ->name('admin.users.approve-supplier');
+         
+    Route::delete('/{user}/reject-supplier', [\App\Http\Controllers\Admin\UserController::class, 'rejectSupplier'])
+         ->name('admin.users.reject-supplier');
          
      Route::post('users/{id}/restore', [\App\Http\Controllers\Admin\UserController::class, 'restore'])
          ->name('admin.users.restore');
@@ -75,6 +87,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
      Route::resource('cities', \App\Http\Controllers\Admin\CityController::class)
          ->except(['show'])
          ->names('admin.cities');
+
+         Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class)
+    ->except(['show'])
+    ->names('admin.brands');
 
      Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)
          ->except(['show'])

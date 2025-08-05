@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-4">
+<div class="container py-4 contact_form"  style="margin-top: 150px;">
     <h1>Редактирование заявки</h1>
     @if($errors->any())
         <div class="alert alert-danger">
@@ -124,21 +124,21 @@
                                     </select>
                                 </div>
                                 
-                                <div class="col-md-6 mb-3">
+                                {{-- <div class="col-md-6 mb-3">
                                     <label class="form-label">Цена</label>
                                     <input type="number" step="0.01" class="form-control" 
                                            name="items[{{ $index }}][price]" 
                                            value="{{ old("items.$index.price", $item['price']) }}">
-                                </div>
+                                </div> --}}
                             </div>
                             
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                {{-- <div class="col-md-6 mb-3">
                                     <label class="form-label">Срок поставки (дни)</label>
                                     <input type="number" class="form-control" 
                                            name="items[{{ $index }}][delivery_days]" 
                                            value="{{ old("items.$index.delivery_days", $item['delivery_days']) }}" min="0">
-                                </div>
+                                </div> --}}
                                 
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Производитель *</label>

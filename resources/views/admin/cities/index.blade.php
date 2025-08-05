@@ -79,7 +79,7 @@
         </div>
         
         <div class="mt-3">
-            {{ $cities->links() }}
+            {{ $cities->links('vendor.pagination.custom') }}
         </div>
     </div>
 </div>

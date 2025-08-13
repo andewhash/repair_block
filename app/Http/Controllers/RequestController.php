@@ -15,8 +15,7 @@ class RequestController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('can:create,App\Models\CustomerRequest')->only(['create', 'store']);
+       
     }
 
     public function catalog(Request $request)

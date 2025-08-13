@@ -243,80 +243,78 @@
 <!-- End category Area -->
 
 <!-- start product Area -->
-<section class="owl-carousel active-product-area section_gap">
-    <!-- single product slide -->
-    <div class="single-product-slider">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 text-center">
-                    <div class="section-title">
-                        <h1>Последние заявки</h1>
-                        <p>Последние заявки пользователей на запчасти для спецтехники.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @php
-                    $requests = \App\Models\CustomerRequest::orderByDesc('id')->take(12)->get();
-                @endphp
 
-                @foreach ($requests as $request)
-                     <!-- single product -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-product">
-                        <div class="product-details">
-                            <h6>{{$request->subject}}</h6>
-                            <p>{{ strlen($request->comment) > 200 ? substr($request->comment, 0, 200) . '...' : $request->comment }}</p>
-                            <div class="price">
-                                <h6>{{$request->user->name}}</h6>
-                                
-                            </div>
-                            
-                        </div>
-                    </div>
+<!-- Заявки -->
+@php
+$requests = \App\Models\CustomerRequest::orderByDesc('id')->take(12)->get();
+@endphp
+<section class="product-area section_gap">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="section-title">
+                    <h1>Каталог заявок</h1>
+                    <p>Актуальные заявки на запчасти от пользователей</p>
                 </div>
-                @endforeach
-               
-               
             </div>
         </div>
-    </div>
-    <!-- single product slide -->
-    <div class="single-product-slider">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 text-center">
-                    <div class="section-title">
-                        <h1>Последние Отклики</h1>
-                        <p>Последние отклики покупателей на заявки запчастей для спецтехники.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- single product -->
-                @php
-                    $responses = \App\Models\SellerResponse::orderByDesc('id')->take(12)->get();
-                @endphp
 
-                @foreach ($responses as $response)
-                <div class="col-lg-3 col-md-6">
-                    <div class="single-product">
+        <div class="row">
+            @foreach($requests as $request)
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="single-product card h-100">
+                    <div class="card-body">
                         <div class="product-details">
-                            <h6>{{$response->request->subject}}</h6>
-                            <p>{{ strlen($response->request->comment) > 200 ? substr($response->request->comment, 0, 200) . '...' : $response->request->comment }}</p>
-                    
-                            <div class="price">
-                                <h6>{{$response->request->user->name}}</h6>
+                            <h5 class="card-title">{{ $request->subject }}</h5>
+                            <p class="card-text text-muted small mb-2">
+                                <i class="fa fa-map-marker"></i> {{ $request->city->name }} | 
+                                <i class="fa fa-user"></i> {{ $request->user->name }}
+                            </p>
+                            <p class="card-text">
+                                {{ Str::limit($request->comment, 150) }}
+                            </p>
+                            <div class="product-items">
+                                <h6 class="mb-2">Товары:</h6>
+                                <ul class="list-unstyled small">
+                                    @foreach($request->items->take(2) as $item)
+                                        <li>
+                                            {{ $item->brand->name }} {{ $item->article }} 
+                                            ({{ $item->quantity }} шт.)
+                                        </li>
+                                    @endforeach
+                                    @if($request->items->count() > 2)
+                                        <li>+{{ $request->items->count() - 2 }} ещё</li>
+                                    @endif
+                                </ul>
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer " style="background: #ffba00;color:white;">
+                        <small  style="color: white;">
+                            Создано: {{ $request->created_at->format('d.m.Y H:i') }}
+                        </small>
+                    </div>
                 </div>
-                @endforeach
-                
+            </div>
+            @endforeach
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="{{ route('requests.catalog') }}" class="primary-btn">Все заявки</a>
             </div>
         </div>
+
+        @if($requests->isEmpty())
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="alert alert-info">На данный момент заявок нет</div>
+            </div>
+        </div>
+        @endif
     </div>
 </section>
+
 <!-- end product Area -->
 	<!-- Start brand Area -->
 	<section class="brand-area section_gap">

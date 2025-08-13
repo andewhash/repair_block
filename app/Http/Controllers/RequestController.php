@@ -64,7 +64,7 @@ class RequestController extends Controller
 
     // Сохранение новой заявки
     public function store(Request $request)
-    {
+    { 
         $validated = $this->validateRequest($request);
 
         // Обработка файла если есть
@@ -147,7 +147,8 @@ class RequestController extends Controller
             'items.*.article' => 'required|string|max:255',
             'items.*.name' => 'required|string|max:255',
             'items.*.quantity' => 'required|integer|min:1',
-            'items.*.quality_type' => 'required|in:Оригинал,Аналог,OEM,REMAN',
+            'items.*.quality_type' => 'required|array',
+            'items.*.quality_type.*' => 'in:Оригинал,Аналог,OEM,REMAN',
             'items.*.price' => 'nullable|numeric|min:0',
             'items.*.delivery_days' => 'nullable|integer|min:0',
             'items.*.manufacturer_id' => 'required_without:items.*.new_manufacturer|nullable|exists:manufacturers,id',
@@ -203,7 +204,7 @@ class RequestController extends Controller
                 'article' => $itemData['article'],
                 'name' => $itemData['name'],
                 'quantity' => $itemData['quantity'],
-                'quality_type' => $itemData['quality_type'],
+                'quality_type' => implode(',', $itemData['quality_type'] ?? []),
                 'price' => $itemData['price'] ?? null,
                 'delivery_days' => $itemData['delivery_days'] ?? null,
                 'manufacturer_id' => $manufacturerId,

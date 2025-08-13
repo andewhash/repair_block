@@ -12,9 +12,19 @@ $(document).ready(function(){
 	$(".fullscreen").css("height", window_height)
     $(".fitscreen").css("height", fitscreen);
 
-  //------- Active Nice Select --------//
+    $('select:not([multiple])').niceSelect();
 
-    $('select').niceSelect();
+    // Инициализация Select2 для select с multiple
+    $('select[multiple]').select2({
+        placeholder: "Выберите варианты",
+        allowClear: true,
+        width: '100%'
+    });
+    
+    // Опционально: стилизация Select2 под niceSelect
+    $('select[multiple]').on('select2:open', function() {
+        $('.select2-container--open .select2-dropdown').addClass('nice-select-dropdown');
+    });
 
 
     $('.navbar-nav li.dropdown').hover(function() {

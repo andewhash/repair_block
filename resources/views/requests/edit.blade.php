@@ -83,13 +83,16 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-6">
-                                        <small class="text-muted">Или укажите новый:</small>
-                                        <input type="text" class="form-control mt-1 new-brand" 
-                                               name="items[{{ $index }}][new_brand]" 
-                                               value="{{ old("items.$index.new_brand") }}"
-                                               placeholder="Новый бренд"
-                                               {{ !empty(old("items.$index.brand_id", $item['brand_id'] ?? null)) ? '' : 'required' }}>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Производитель *</label>
+                                        <select class="form-control manufacturer-select" name="items[{{ $index }}][manufacturer_id]">
+                                            <option value="">Выберите производителя</option>
+                                            @foreach($manufacturers as $manufacturer)
+                                                <option value="{{ $manufacturer->id }}" {{$item['manufacturer_id'] ?? null == $manufacturer->id ? 'selected' : '' }}>
+                                                    {{ $manufacturer->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 
@@ -119,36 +122,23 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Тип качества *</label>
-                                        <select class="form-control" name="items[{{ $index }}][quality_type]" required>
-                                            <option value="Оригинал" {{ (old("items.$index.quality_type", $item['quality_type']) == 'Оригинал' ? 'selected' : '') }}>Оригинал</option>
-                                            <option value="Аналог" {{ (old("items.$index.quality_type", $item['quality_type']) == 'Аналог' ? 'selected' : '') }}>Аналог</option>
-                                            <option value="OEM" {{ (old("items.$index.quality_type", $item['quality_type']) == 'OEM' ? 'selected' : '') }}>OEM</option>
-                                            <option value="REMAN" {{ (old("items.$index.quality_type", $item['quality_type']) == 'REMAN' ? 'selected' : '') }}>REMAN</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Производитель *</label>
-                                        <select class="form-control manufacturer-select" name="items[{{ $index }}][manufacturer_id]">
-                                            <option value="">Выберите производителя</option>
-                                            @foreach($manufacturers as $manufacturer)
-                                                <option value="{{ $manufacturer->id }}" {{$item['manufacturer_id'] ?? null == $manufacturer->id ? 'selected' : '' }}>
-                                                    {{ $manufacturer->name }}
+                                        <select multiple class="select2 form-control @error('items.'.$index.'.quality_type') is-invalid @enderror" 
+                                                name="items[{{ $index }}][quality_type][]" 
+                                                id="items_{{ $index }}_quality_type" required>
+                                            @foreach(['Оригинал', 'Аналог', 'OEM', 'REMAN'] as $type)
+                                                <option value="{{ $type }}" 
+                                                    @if(in_array($type, explode(',', old("items.$index.quality_type", $item['quality_type'] ?? '')))) selected @endif>
+                                                    {{ $type }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <small class="text-muted">Или укажите нового:</small>
-                                        <input type="text" class="form-control mt-1 new-manufacturer" 
-                                               name="items[{{ $index }}][new_manufacturer]" 
-                                               value="{{ old("items.$index.new_manufacturer") }}"
-                                               placeholder="Новый производитель"
-                                               {{ !empty(old("items.$index.manufacturer_id", $item['manufacturer_id'] ?? null)) ? '' : 'required' }}>
+                                        @error('items.'.$index.'.quality_type')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
+
+                             
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Комментарий</label>

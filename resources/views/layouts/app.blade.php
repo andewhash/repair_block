@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="/css/ion.rangeSlider.skinFlat.css" />
 	<link rel="stylesheet" href="/css/magnific-popup.css">
 	<link rel="stylesheet" href="/css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body style="height: auto !important; overflow-x: hidden;">
 	<style>
@@ -73,7 +74,7 @@
                                         <li class="nav-item @if(request()->routeIs('profile.show')) active @endif" style="margin-left: 0">
                                             <a class="nav-link" href="{{ route('profile.show') }}" style="margin-left: 0;">Профиль</a>
                                         </li>
-                                        @if(auth()->user()->role == 'user')
+                                        @if(auth()->user()->role == 'user' || auth()->user()->role == 'buyer')
                                             <li class="nav-item @if(request()->routeIs('requests.index')) active @endif">
                                                 <a class="nav-link" href="{{ route('requests.index') }}">Мои заявки</a>
                                             </li>
@@ -309,6 +310,8 @@
     ym(103580428, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/103580428" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- /Yandex.Metrika counter -->
 </body>
 </html>

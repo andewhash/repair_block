@@ -167,7 +167,7 @@
                     </a>
                 </div>
             @endif
-            @if($user->role === 'user' || $user->role == 'admin')
+            @if($user->role === 'user' || $user->role == 'admin' || $user->role == 'buyer')
             <!-- Последние заявки -->
             <div class="card" style="border: none; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
                 <div class="card-header" style="background: linear-gradient(270deg, #ffba00 0%, #ff6c00 100%); color: white; border: none;">

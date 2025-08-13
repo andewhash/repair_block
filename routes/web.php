@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
@@ -29,6 +30,10 @@ Route::get('/contact', function() {
 })->name('contact');
 
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+// Для заявок
+Route::get('/requests/catalog', [RequestController::class, 'catalog'])->name('requests.catalog');
+// Для товаров
+Route::get('/products/catalog', [ProductController::class, 'catalog'])->name('products.catalog');
 
 Auth::routes();
 

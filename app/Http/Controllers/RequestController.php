@@ -19,6 +19,34 @@ class RequestController extends Controller
         $this->middleware('can:create,App\Models\CustomerRequest')->only(['create', 'store']);
     }
 
+    public function catalog(Request $request)
+    {
+        $query = CustomerRequest::with(['city', 'user', 'items.brand'])
+            ->latest();
+            
+        // Фильтрация
+        if ($request->has('city_id') && $request->city_id) {
+            $query->where('city_id', $request->city_id);
+        }
+        
+        if ($request->has('brand_id') && $request->brand_id) {
+            $query->whereHas('items', function($q) use ($request) {
+                $q->where('brand_id', $request->brand_id);
+            });
+        }
+        
+        // Сортировка
+        $sort = $request->get('sort', 'created_at');
+        $direction = $request->get('direction', 'desc');
+        $query->orderBy($sort, $direction);
+        
+        $requests = $query->paginate(10);
+        $cities = City::all();
+        $brands = Brand::all();
+        
+        return view('requests.catalog', compact('requests', 'cities', 'brands'));
+    }
+
     // Список заявок пользователя
     public function index()
     {

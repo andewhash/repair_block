@@ -50,6 +50,12 @@
                             <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
                                 <a class="nav-link" href="{{route('welcome')}}">Главная</a>
                             </li>
+                            <li class="nav-item @if(request()->routeIs('requests.catalog')) active @endif">
+                                <a class="nav-link" href="{{route('requests.catalog')}}">Заявки</a>
+                            </li>
+                            <li class="nav-item @if(request()->routeIs('products.catalog')) active @endif">
+                                <a class="nav-link" href="{{route('products.catalog')}}">Товары</a>
+                            </li>
                             <li class="nav-item @if(request()->routeIs('blog.*')) active @endif">
                                 <a class="nav-link" href="{{route('blog.index')}}">Блог</a>
                             </li>

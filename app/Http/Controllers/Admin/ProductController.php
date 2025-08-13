@@ -12,6 +12,37 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function catalog(Request $request)
+    {
+        $query = Product::with(['city', 'brand', 'manufacturer', 'supplier'])
+            ->latest();
+            
+        // Фильтрация
+        if ($request->has('city_id') && $request->city_id) {
+            $query->where('city_id', $request->city_id);
+        }
+        
+        if ($request->has('brand_id') && $request->brand_id) {
+            $query->where('brand_id', $request->brand_id);
+        }
+        
+        if ($request->has('manufacturer_id') && $request->manufacturer_id) {
+            $query->where('manufacturer_id', $request->manufacturer_id);
+        }
+        
+        // Сортировка
+        $sort = $request->get('sort', 'created_at');
+        $direction = $request->get('direction', 'desc');
+        $query->orderBy($sort, $direction);
+        
+        $products = $query->paginate(10);
+        $cities = City::all();
+        $brands = Brand::all();
+        $manufacturers = Manufacturer::all();
+        
+        return view('products.catalog', compact('products', 'cities', 'brands', 'manufacturers'));
+    }
+
     public function index(Request $request)
     {
         $query = Product::with(['brand', 'manufacturer', 'city', 'supplier']);
